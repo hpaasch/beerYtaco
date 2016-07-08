@@ -9,29 +9,26 @@ class Food(models.Model):
     protein = models.CharField(max_length=20)
     dress = models.CharField(max_length=20)
     finish = models.CharField(max_length=20)
-    quantity = models.IntegerField()
-    notes = models.CharField(max_length=250)
+    description = models.CharField(max_length=250)
     price = models.DecimalField(max_digits=5, decimal_places=2)
 
 
 class Drink(models.Model):
     name = models.CharField(max_length=20)
     portion = models.CharField(max_length=5)
-    quantity = models.IntegerField()
-    notes = models.CharField(max_length=250)
+    description = models.CharField(max_length=250)
     price = models.DecimalField(max_digits=5, decimal_places=2)
 
 
 class Extra(models.Model):
     name = models.CharField(max_length=20)
-    quantity = models.IntegerField()
-    notes = models.CharField(max_length=250)
+    description = models.CharField(max_length=250)
     price = models.DecimalField(max_digits=5, decimal_places=2)
 
 
 class EmployeeProfile(models.Model):
     worker = models.OneToOneField('auth.User')
-    nickname = models.CharField(max_length=20)
+    nickname = models.CharField(max_length=20, null=True, blank=True)
     role = models.CharField(max_length=20)
     preferred_language = models.CharField(max_length=20)
 
@@ -41,6 +38,16 @@ class CustomerOrder(models.Model):
     food_item = models.ForeignKey(Food)
     drink_item = models.ForeignKey(Drink)
     extra_item = models.ForeignKey(Extra)
+    notes = models.CharField(max_length=250, null=True, blank=True)
+
+
+class OrderLine(models.Model):
+    order = models.ForeignKey(CustomerOrder)
+    food = models.ForeignKey(Food)
+    drink = models.ForeignKey(Drink)
+    extra = models.ForeignKey(Extra)
+    notes = models.CharField(max_length=250, null=True, blank=True)
+    quantity = models.IntegerField()
 
 
 @receiver(post_save, sender='auth.User')
