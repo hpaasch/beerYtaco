@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h3>This is the full food order. </h3>
+  {% for object in object_list %}
+  <p>  {{ object.order_tag.tag_number }}
+    {{ object.food}}
+    {{ object.food_quantity }}
+  {{ object.created }}</p>
+  {% endfor %}
+{% endblock %}

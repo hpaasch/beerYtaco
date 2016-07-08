@@ -21,6 +21,8 @@
           <a class="btn btn-sm" href="#">My Account</a>
           <a class="btn btn-sm" href="{% url 'order_food_view' %}">Order Food</a>
           <a class="btn btn-sm" href="{% url 'order_drink_view' %}">Order Drink</a>
+          <a class="btn btn-sm" href="{% url 'show_food_order_view' %}">Show Food Order</a>
+
         {% else %}
           <a class="btn btn-lg" href="{% url 'index_view' %}">Homepage</a>
           <a class="btn btn-lg" href="#">Create Account</a>

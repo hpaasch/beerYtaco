@@ -63,9 +63,13 @@ class OrderFood(models.Model):
     extra_quantity = models.IntegerField(null=True)
     notes = models.CharField(max_length=250, null=True, blank=True)
     order_up = models.BooleanField(default=False)
+    created = models.DateTimeField(auto_now_add=True, null=True)
 
     def __str__(self):
         return str(self.order_tag)
+
+    class Meta:
+        ordering = ['created']
 
 
 class OrderDrink(models.Model):
@@ -74,9 +78,13 @@ class OrderDrink(models.Model):
     drink_quantity = models.IntegerField(null=True)
     notes = models.CharField(max_length=250, null=True, blank=True)
     order_up = models.BooleanField(default=False)
+    created = models.DateTimeField(auto_now_add=True, null=True)
 
     def __str__(self):
         return str(self.order_tag)
+
+    class Meta:
+        ordering = ['-created', 'order_tag']
 
 
 @receiver(post_save, sender='auth.User')

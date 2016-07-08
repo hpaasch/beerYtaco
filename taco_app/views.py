@@ -21,3 +21,10 @@ class OrderDrinkView(CreateView):
     model = OrderDrink
     fields = ['order_tag', 'drink', 'drink_quantity', 'notes', 'order_up']
     success_url = reverse_lazy('order_drink_view')
+
+class ShowFoodOrder(ListView):
+    template_name = 'show_food_order.html'
+    model = OrderFood
+
+    def get_queryset(self):
+        return OrderFood.objects.filter(order_up=False)
