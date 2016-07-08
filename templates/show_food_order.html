@@ -3,7 +3,7 @@
 {% block content %}
 <h3>This is the full food order. </h3>
   {% for object in object_list %}
-  <p>  {{ object.order_tag.tag_number }}
+  <p>  <a href="{% url 'show_customer_order_view' object.pk %}">{{ object.order_tag.tag_number }}</a>
     {{ object.food}}
     {{ object.food_quantity }}
   {{ object.created }}</p>

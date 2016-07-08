@@ -28,3 +28,19 @@ class ShowFoodOrder(ListView):
 
     def get_queryset(self):
         return OrderFood.objects.filter(order_up=False)
+
+
+class ShowDrinkOrder(ListView):
+    template_name = 'show_drink_order.html'
+    model = OrderDrink
+
+    def get_queryset(self):
+        return OrderDrink.objects.filter(order_up=False)
+
+
+class ShowCustomerOrder(ListView):
+    template_name = 'show_customer_order.html'
+
+    def get_queryset(self, **kwargs):
+        customer = self.kwargs.get('pk', None)
+        OrderDrink.objects.filter(order_tag__tag_number=customer.tag_number)

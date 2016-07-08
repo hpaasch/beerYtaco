@@ -48,11 +48,11 @@ class EmployeeProfile(models.Model):
 
 class Customer(models.Model):
     created = models.DateTimeField(auto_now_add=True)
-    tag_number = models.IntegerField(null=True)
+    tag_number = models.SlugField(null=True)
     paid = models.BooleanField(default=False)
 
     def __str__(self):
-        return str(self.tag_number)
+        return (self.tag_number)
 
 
 class OrderFood(models.Model):
