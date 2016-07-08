@@ -19,8 +19,8 @@
         {% if request.user.is_authenticated %}
           <a class="btn btn-sm" href="#">Logout</a>
           <a class="btn btn-sm" href="#">My Account</a>
-          <a class="btn btn-sm" href="#">Text</a>
-          <a class="btn btn-sm" href="#">Text</a>
+          <a class="btn btn-sm" href="{% url 'order_food_view' %}">Order Food</a>
+          <a class="btn btn-sm" href="{% url 'order_drink_view' %}">Order Drink</a>
         {% else %}
           <a class="btn btn-lg" href="{% url 'index_view' %}">Homepage</a>
           <a class="btn btn-lg" href="#">Create Account</a>
