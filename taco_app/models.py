@@ -57,10 +57,10 @@ class Customer(models.Model):
 
 class OrderFood(models.Model):
     order_tag = models.ForeignKey(Customer)
-    food = models.ForeignKey(Food, null=True)
-    food_quantity = models.IntegerField(null=True)
-    extra = models.ForeignKey(Extra, null=True)
-    extra_quantity = models.IntegerField(null=True)
+    food = models.ForeignKey(Food, null=True, blank=True)
+    food_quantity = models.PositiveIntegerField(null=True, default=0)
+    extra = models.ForeignKey(Extra, null=True, blank=True)
+    extra_quantity = models.PositiveIntegerField(null=True, default=0)
     notes = models.CharField(max_length=250, null=True, blank=True)
     order_up = models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True, null=True)
@@ -74,8 +74,8 @@ class OrderFood(models.Model):
 
 class OrderDrink(models.Model):
     order_tag = models.ForeignKey(Customer)
-    drink = models.ForeignKey(Drink, null=True)
-    drink_quantity = models.IntegerField(null=True)
+    drink = models.ForeignKey(Drink, null=True, blank=True)
+    drink_quantity = models.PositiveIntegerField(null=True, blank=True)
     notes = models.CharField(max_length=250, null=True, blank=True)
     order_up = models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True, null=True)

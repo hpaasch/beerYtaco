@@ -6,4 +6,9 @@
     {{ form.as_p}}
     <input type="submit" name="order_food" value="Order food item">
   </form>
+  <form class="" action="" method="post">
+    {% csrf_token %}
+    {{ order_drink.as_p}}
+    <input type="submit" name="order_drink" value="Order drink item">
+  </form>
 {% endblock %}

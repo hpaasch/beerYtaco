@@ -4,6 +4,7 @@ from django.views.generic.edit import CreateView, UpdateView
 from taco_app.models import Customer, OrderFood, OrderDrink, Food
 from django.core.urlresolvers import reverse_lazy
 
+from taco_app.forms import OrderDrinkForm
 
 class IndexView(ListView):
     template_name = 'index.html'
@@ -15,6 +16,11 @@ class OrderFoodView(CreateView):
     model = OrderFood
     fields = ['order_tag', 'food', 'food_quantity', 'extra', 'extra_quantity', 'notes', 'order_up']
     success_url = reverse_lazy('order_food_view')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['order_drink'] = OrderDrinkForm
+        return context
 
 
 class OrderDrinkView(CreateView):
