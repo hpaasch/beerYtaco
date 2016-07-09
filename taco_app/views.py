@@ -40,10 +40,17 @@ class ShowDrinkOrder(ListView):
 
 class ShowCustomerOrder(ListView):
     template_name = 'show_customer_order.html'
+    model = Customer
 
-    # def get_context_data(self, **kwargs):
-        # object_list ... get customer id
-
-    def get_queryset(self, **kwargs):
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
         customer = self.kwargs.get('pk', None)
-        return OrderFood.objects.filter(order_tag_id=customer)
+        context['food_list'] = OrderFood.objects.filter(order_tag_id=customer).filter(order_tag_id__paid=False)
+        context['drink_list'] = OrderDrink.objects.filter(order_tag_id=customer).filter(order_tag_id__paid=False)
+        return context
+
+    # def get_queryset(self, **kwargs):
+    #     customer = self.kwargs.get('pk', None)
+    #     food_list = OrderFood.objects.filter(order_tag_id=customer).filter(order_tag_id__paid=False)
+    #     drink_list = OrderDrink.objects.filter(order_tag_id=customer).filter(order_tag_id__paid=False)
+    #     return food_list, drink_list
