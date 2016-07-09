@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load tz %}
 {% block content %}
 <h3>This is the full food order. </h3>
 
@@ -7,7 +7,13 @@
   <p>  <a href="{% url 'show_customer_order_view' object.order_tag.tag_number %}">{{ object.order_tag.tag_number }}</a>
     {{ object.food}}
     {{ object.food_quantity }}
-  {{ object.created }}</p>
+    {{ object.extra }}
+    {{ object.extra_quantity }}
+
+{% timezone 'America/New_York' %}
+    {{ object.created|time:"g:i"}}
+    {% endtimezone %}
+</p>
   {% endfor %}
 
 {% endblock %}

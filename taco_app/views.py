@@ -45,16 +45,21 @@ class ShowCustomerOrder(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         customer = self.kwargs.get('pk', None)
-        food_list = OrderFood.objects.filter(order_tag_id=customer).filter(order_tag_id__paid=False)
         total_unpaid = 0
+        subtotal_food = 0
+        subtotal_drinks = 0
+        food_list = OrderFood.objects.filter(order_tag_id=customer).filter(order_tag_id__paid=False)
         for food in food_list:
-            total_unpaid += (food.food.price * food.food_quantity)
+            subtotal_food += (food.food.price * food.food_quantity) + (food.extra.price * food.food_quantity)
         drink_list = OrderDrink.objects.filter(order_tag_id=customer).filter(order_tag_id__paid=False)
         for drink in drink_list:
-            total_unpaid += (drink.drink.price * drink.drink_quantity)
+            subtotal_drinks += (drink.drink.price * drink.drink_quantity)
+        total_unpaid = subtotal_food + subtotal_drinks
         context = {
             'food_list': food_list,
             'drink_list': drink_list,
+            'subtotal_food': subtotal_food,
+            'subtotal_drinks': subtotal_drinks,
             'total_unpaid': total_unpaid,
         }
         return context
