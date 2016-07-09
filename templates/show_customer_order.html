@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load tz %}
 {% block content %}
-<h3>This is the full unpaid order for Customer No. {{ food.order_tag.tag_number }}. </h3>
+<h3>This is the full unpaid order for Customer No. {{ food_list.order_tag.tag_number }}. </h3>
 <h5>(Bar only: Customer No. {{ drink.order_tag.tag_number }} )</h5>
 <h4>Drinks</h4>
   {% for drink in drink_list %}
@@ -9,7 +9,8 @@
     {{ drink.drink}}
     {{ drink.drink.price}} each
     {{ drink.drink_quantity }}
-  {{ drink.created }}</p>
+    {% timezone 'America/New_York' %}
+{{ drink.created|time:"g:iA"|lower }}{% endtimezone %}</p>
   {% endfor %}
   <h5>Bar tab: ${{ subtotal_drinks }}</h5>
   <h4>Food</h4>
@@ -21,14 +22,20 @@
       <p>{{ food.extra }}
       {{ food.extra.price}} each
       {{ food.extra_quantity }}
-      {% localtime on %}
-        {{ food.created|time:"g:i"}}
-    {% endlocaltime %}
+      {% timezone 'America/New_York' %}
+
+        {{ food.created|time:"g:iA"|lower }}
+    {% endtimezone %}
 </p>
     {% endfor %}
     <h5>Food bill: ${{ subtotal_food }}</h5>
     <h3>TOTAL: ${{ total_unpaid }}</h3>
-    <input type="submit" name="paid" value="Mark as 'Paid'">
+
+    <form class="" action="" method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <input class="btn btn-success" type="submit" name="paid" value="Mark as 'paid'">
+    </form>
 
 
 {% endblock %}

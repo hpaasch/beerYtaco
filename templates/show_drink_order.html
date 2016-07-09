@@ -9,6 +9,9 @@
 {% timezone 'America/New_York' %}
   {{ object.created }}
 {% endtimezone %}
+
+<a href="{% url 'update_drink_order_view' object.pk %}">Order up</a>
+
 </p>
   {% endfor %}
 {% endblock %}

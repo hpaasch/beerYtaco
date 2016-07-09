@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from django.views.generic import TemplateView, CreateView, ListView
+from django.views.generic import TemplateView, ListView
+from django.views.generic.edit import CreateView, UpdateView
 from taco_app.models import Customer, OrderFood, OrderDrink, Food
 from django.core.urlresolvers import reverse_lazy
 
@@ -22,6 +23,7 @@ class OrderDrinkView(CreateView):
     fields = ['order_tag', 'drink', 'drink_quantity', 'notes', 'order_up']
     success_url = reverse_lazy('order_drink_view')
 
+
 class ShowFoodOrder(ListView):
     template_name = 'show_food_order.html'
     model = OrderFood
@@ -38,9 +40,22 @@ class ShowDrinkOrder(ListView):
         return OrderDrink.objects.filter(order_up=False)
 
 
-class ShowCustomerOrder(ListView):
+class UpdateDrinkOrder(UpdateView):
+    model = OrderDrink
+    fields = ['order_up']
+    success_url = reverse_lazy('show_drink_order_view')
+
+    def get_object(self, queryset=None):
+        drink = self.kwargs.get('pk', None)
+        return OrderDrink.objects.get(pk=drink)
+
+
+class ShowCustomerOrder(UpdateView):
     template_name = 'show_customer_order.html'
     model = Customer
+    fields = ['paid']
+    success_url = reverse_lazy('index_view')
+
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -61,5 +76,12 @@ class ShowCustomerOrder(ListView):
             'subtotal_food': subtotal_food,
             'subtotal_drinks': subtotal_drinks,
             'total_unpaid': total_unpaid,
-        }
+            }
         return context
+
+class PendingCustomers(ListView):
+    model = Customer
+    fields = ['tag_number', 'created']
+
+    def get_queryset(self):
+        return Customer.objects.filter(paid=False)
