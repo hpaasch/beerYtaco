@@ -16,21 +16,22 @@
       <div class="container">
 
         <img src="http://static.wixstatic.com/media/faf56f_8f69845a92874c2c81b7b1f300ce38eb.png_srz_303_313_85_22_0.50_1.20_0.00_png_srz" alt="">
+          <a class="btn btn-primary" href="{% url 'index_view' %}">Homepage</a>
 
-        {% if request.user.is_authenticated %}
-          <a class="btn btn-sm" href="#">Logout</a>
-          <a class="btn btn-sm" href="#">My Account</a>
-          <a class="btn btn-sm" href="{% url 'order_food_view' %}">Order Food</a>
-          <a class="btn btn-sm" href="{% url 'order_drink_view' %}">Order Drink</a>
-          <a class="btn btn-sm" href="{% url 'show_food_order_view' %}">Pending Food Orders</a>
-          <a class="btn btn-sm" href="{% url 'show_drink_order_view' %}">Pending Drink Orders</a>
-          <a class="btn btn-sm" href="{% url 'pending_customers_view' %}">Live Customers</a>
+          {% if request.user.is_authenticated %}
+            <a class="btn btn-primary" href="{% url 'logout' %}?next=/">Logout</a>
+            <a class="btn btn-primary" href="{% url 'account_profile_view' %}">My Account</a>
+            <a class="btn btn-primary" href="{% url 'order_food_view' %}">Order Food</a>
+            <a class="btn btn-primary" href="{% url 'order_drink_view' %}">Order Drink</a>
+            <a class="btn btn-primary" href="{% url 'show_food_order_view' %}">Pending Food Orders</a>
+            <a class="btn btn-primary" href="{% url 'show_drink_order_view' %}">Pending Drink Orders</a>
+            <a class="btn btn-primary" href="{% url 'pending_customers_view' %}">Live Customers</a>
 
-        {% else %}
-          <a class="btn btn-lg" href="{% url 'index_view' %}">Homepage</a>
-          <a class="btn btn-lg" href="#">Create Account</a>
-          <a class="btn btn-lg" href="#">Sign In</a>
-        {% endif %}
+          {% else %}
+            <a class="btn btn-primary" href="{% url 'create_account_view' %}">Create Account</a>
+            <a class="btn btn-primary" href="{% url 'login' %}">Sign In</a>
+
+          {% endif %}
       </div>
     </nav>
     <div class="container">

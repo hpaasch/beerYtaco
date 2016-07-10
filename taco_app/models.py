@@ -93,4 +93,4 @@ def create_user_profile(**kwargs):
     instance = kwargs.get('instance')
 
     if created:
-        EmployeeProfile.objects.create(user=instance)
+        EmployeeProfile.objects.create(worker=instance)

@@ -1,10 +1,12 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView, ListView
 from django.views.generic.edit import CreateView, UpdateView
-from taco_app.models import Customer, OrderFood, OrderDrink, Food
 from django.core.urlresolvers import reverse_lazy
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
 
-from taco_app.forms import OrderDrinkForm
+from taco_app.models import Customer, OrderFood, OrderDrink, Food, EmployeeProfile
+from taco_app.forms import EmployeeProfileUpdateForm
 
 class IndexView(ListView):
     template_name = 'index.html'
@@ -17,10 +19,11 @@ class OrderFoodView(CreateView):
     fields = ['order_tag', 'food', 'food_quantity', 'extra', 'extra_quantity', 'notes', 'order_up']
     success_url = reverse_lazy('order_food_view')
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['order_drink'] = OrderDrinkForm
-        return context
+    # this would put a second form on the template. but only one can be submitted at a time. darn.
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     context['order_drink'] = OrderDrinkForm
+    #     return context
 
 
 class OrderDrinkView(CreateView):
@@ -28,6 +31,10 @@ class OrderDrinkView(CreateView):
     model = OrderDrink
     fields = ['order_tag', 'drink', 'drink_quantity', 'notes', 'order_up']
     success_url = reverse_lazy('order_drink_view')
+
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     context['order_drink_form'] = OrderDrinkForm
 
 
 class ShowFoodOrder(ListView):
@@ -91,3 +98,34 @@ class PendingCustomers(ListView):
 
     def get_queryset(self):
         return Customer.objects.filter(paid=False)
+
+
+class CreateAccountView(CreateView):
+    model = User
+    form_class = UserCreationForm
+    success_url = reverse_lazy('login')
+
+
+class AccountProfileView(ListView):
+    model = EmployeeProfile
+
+
+class EmployeeProfileUpdateView(UpdateView):
+    model = EmployeeProfile
+    success_url = reverse_lazy('account_profile_view')
+    fields = ['nickname', 'role', 'preferred_language']
+
+    def get_object(self, queryset=None):
+        return self.request.user.employeeprofile
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # if self.request.user.is_authenticated():
+        context["profile_form"] = EmployeeProfileUpdateForm(initial={
+            "nickname": self.request.user.employeeprofile.nickname,
+            "role": self.request.user.employeeprofile.role,
+            "preferred_language": self.request.user.employeeprofile.preferred_language,
+        })
+        # else:
+        #     context["login_form"] = AuthenticationForm()
+        return context

@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="panel panel-default">
+              <div class="panel-heading">
+                <h3 class="panel-title">Employee profile</h3>
+              </div>
+              <div class="panel-body">
+                <ul>
+
+                    <li>{{ object.nickname }}</li>
+                    <li>{{ object.role }}</li>
+
+
+                </ul>
+                {# <a class='btn btn-primary' role='button' href="{% url 'employee_profile_update_view' object.pk %}">Update profile</a>#}
+                <a class='btn btn-primary' role='button' href="{% url 'order_food_view' %}">Place FOOD order</a>
+                <a class='btn btn-primary' role='button' href="{% url 'order_drink_view' %}">Place DRINK order</a>
+                <a class='btn btn-primary' role='button' href="{% url 'show_food_order_view' %}">View KITCHEN orders</a>
+                <a class='btn btn-primary' role='button' href="{% url 'show_drink_order_view' %}">View BAR orders</a>
+
+              </div>
+            </div>
+{% endblock %}
