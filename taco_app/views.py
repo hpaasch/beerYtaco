@@ -109,6 +109,17 @@ class CreateAccountView(CreateView):
 class AccountProfileView(ListView):
     model = EmployeeProfile
 
+    def get_object(self, queryset=None):
+        return self.request.user.employeeprofile
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["username"] = self.request.user
+        context["nickname"] = self.request.user.employeeprofile.nickname
+        context["role"] = self.request.user.employeeprofile.role
+        context["preferred_language"] = self.request.user.employeeprofile.preferred_language
+        return context
+
 
 class EmployeeProfileUpdateView(UpdateView):
     model = EmployeeProfile
