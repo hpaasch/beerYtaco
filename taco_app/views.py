@@ -56,7 +56,16 @@ class ShowDrinkOrder(ListView):
     # def get_context_data(self, **kwargs):
     #     context = super().get_context_data(**kwargs)
     #     drink = self.kwargs.get('pk', None)
-    #     FINISH THIS TO TRY TO HAVE ORDER UP ON ONE CLICK
+    #     FINISH THIS TO TRY TO HAVE ORDER UP ON ONE CLICK INSTEAD OF 3
+
+class UpdateFoodOrder(UpdateView):
+    model = OrderFood
+    fields = ['order_up']
+    success_url = reverse_lazy('show_food_order_view')
+
+    def get_object(self, queryset=None):
+        food = self.kwargs.get('pk', None)
+        return OrderFood.objects.get(pk=food)
 
 
 class UpdateDrinkOrder(UpdateView):
@@ -103,12 +112,16 @@ class ShowCustomerOrder(UpdateView):
             }
         return context
 
+
+# this view under construction. intended to show status of all tables and reopen the tab for a table
 class PendingCustomers(ListView):
     model = Customer
-    fields = ['tag_number', 'created']
-
-    def get_queryset(self):
-        return Customer.objects.filter(paid=False)
+    fields = ['paid']
+    success_url = reverse_lazy('index_view')
+    # fields = ['tag_number', 'created']
+    #
+    # def get_queryset(self):
+    #     return Customer.objects.filter(paid=False)
 
 
 class CreateAccountView(CreateView):
@@ -147,7 +160,5 @@ class EmployeeProfileUpdateView(UpdateView):
             "nickname": self.request.user.employeeprofile.nickname,
             "role": self.request.user.employeeprofile.role,
             "preferred_language": self.request.user.employeeprofile.preferred_language,
-        })
-        # else:
-        #     context["login_form"] = AuthenticationForm()
+            })
         return context

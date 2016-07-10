@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <form class="" action="" method="post">
+    {% csrf_token %}
+    {{ form.order_up }}
+    <input type="submit" name="served" value="Served!">
+  </form>
+{% endblock %}

@@ -1,10 +1,16 @@
+<!-- NOT YET WORKING. this is the place to reset table/customer from paid to unpaid. -->
+
 {% extends "base.html" %}
 {% load tz %}
 {% block content %}
+<h3>Table list</h3>
 <ul>
   {% for object in object_list %}
-    <li><a href="{% url 'show_customer_order_view' object.pk %}">Customer No: {{ object.tag_number }}</a>
-      
+    <li><a href="{% url 'show_customer_order_view' object.pk %}">Table No: {{ object.tag_number }}</a>
+    {{ object.paid }} <form class="" action="" method="post">
+      {% csrf_token %}
+      <input class="btn btn-success" type="submit" name="not paid" value="Reopen tab">
+    </form></li>
   {% endfor %}
 </ul>
 

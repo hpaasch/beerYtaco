@@ -4,7 +4,7 @@ from django.contrib import admin
 
 from taco_app.views import CreateAccountView, AccountProfileView, EmployeeProfileUpdateView
 
-from taco_app.views import IndexView, OrderFoodView, OrderDrinkView, ShowFoodOrder, ShowDrinkOrder, UpdateDrinkOrder, PendingCustomers, ShowCustomerOrder
+from taco_app.views import IndexView, OrderFoodView, OrderDrinkView, ShowFoodOrder, UpdateFoodOrder, ShowDrinkOrder, UpdateDrinkOrder, PendingCustomers, ShowCustomerOrder
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -14,8 +14,9 @@ urlpatterns = [
     url(r'accounts/profile/$', AccountProfileView.as_view(), name='account_profile_view'),
     url(r'accounts/profile/update/$', EmployeeProfileUpdateView.as_view(), name='employee_profile_update_view'),
     url(r'food/$', OrderFoodView.as_view(), name='order_food_view'),
-    url(r'drink/$', OrderDrinkView.as_view(), name='order_drink_view'),
     url(r'food_orders/$', ShowFoodOrder.as_view(), name='show_food_order_view'),
+    url(r'food_orders/update/(?P<pk>\d+)/$', UpdateFoodOrder.as_view(), name='update_food_order_view'),
+    url(r'drink/$', OrderDrinkView.as_view(), name='order_drink_view'),
     url(r'drink_orders/$', ShowDrinkOrder.as_view(), name='show_drink_order_view'),
     url(r'drink_orders/update/(?P<pk>\d+)/$', UpdateDrinkOrder.as_view(), name='update_drink_order_view'),
     url(r'customers/$', PendingCustomers.as_view(), name='pending_customers_view'),

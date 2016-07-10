@@ -21,7 +21,7 @@
             <td>{{ object.extra_quantity }}</td>
             <td>{{ object.notes }}</td>
             <td>{% timezone 'America/New_York' %} {{ object.created|time:"g:iA"|lower }} {% endtimezone %}</td>
-            <td><a href="#">Order up</a></td>
+            <td><a href="{% url 'update_food_order_view' object.pk %}">Order up</a></td>
         </tr>
     {% endfor %}
     </tbody>
