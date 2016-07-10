@@ -1,17 +1,24 @@
 {% extends "base.html" %}
 {% load tz %}
 {% block content %}
-<h3>Pending drink orders: </h3>
-  {% for object in object_list %}
-  <p> <a href="{% url 'show_customer_order_view' object.order_tag.tag_number %}"> {{ object.order_tag.tag_number }}</a>
-    {{ object.drink}}
-    {{ object.drink_quantity }}
-{% timezone 'America/New_York' %}
-  {{ object.created }}
-{% endtimezone %}
-
-<a href="{% url 'update_drink_order_view' object.pk %}">Order up</a>
-
-</p>
-  {% endfor %}
+<table class="table table-hover">
+    <th>Table Number</th>
+    <th>Drink</th>
+    <th>Quantity</th>
+    <th>Notes</th>
+    <th>Time in</th>
+    <th>Order Up!</th>
+    <tbody>
+    {% for object in object_list %}
+        <tr>
+            <td><a href="{% url 'show_customer_order_view' object.order_tag.tag_number %}">Table No. {{ object.order_tag.tag_number }} </td>
+            <td>{{ object.drink}}</td>
+            <td>{{ object.drink_quantity }}</td>
+            <td>{{ object.notes }}</td>
+            <td>{% timezone 'America/New_York' %} {{ object.created|time:"g:iA"|lower }} {% endtimezone %}</td>
+            <td><a href="{% url 'update_drink_order_view' object.pk %}">Order up</a></td>
+        </tr>
+    {% endfor %}
+    </tbody>
+  </table>
 {% endblock %}

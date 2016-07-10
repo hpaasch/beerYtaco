@@ -48,9 +48,15 @@ class ShowFoodOrder(ListView):
 class ShowDrinkOrder(ListView):
     template_name = 'show_drink_order.html'
     model = OrderDrink
+    fields = ['order_up']
 
     def get_queryset(self):
         return OrderDrink.objects.filter(order_up=False)
+
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     drink = self.kwargs.get('pk', None)
+    #     FINISH THIS TO TRY TO HAVE ORDER UP ON ONE CLICK
 
 
 class UpdateDrinkOrder(UpdateView):
@@ -78,7 +84,12 @@ class ShowCustomerOrder(UpdateView):
         subtotal_drinks = 0
         food_list = OrderFood.objects.filter(order_tag_id=customer).filter(order_tag_id__paid=False)
         for food in food_list:
-            subtotal_food += (food.food.price * food.food_quantity) + (food.extra.price * food.food_quantity)
+            if food.food_quantity >= 1:
+                subtotal_food += (food.food.price * food.food_quantity)
+        extras_list = OrderFood.objects.filter(order_tag_id=customer).filter(order_tag_id__paid=False)
+        for extra in extras_list:
+            if food.extra_quantity >= 1:
+                subtotal_food += (food.extra.price * food.extra_quantity)
         drink_list = OrderDrink.objects.filter(order_tag_id=customer).filter(order_tag_id__paid=False)
         for drink in drink_list:
             subtotal_drinks += (drink.drink.price * drink.drink_quantity)

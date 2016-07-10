@@ -3,13 +3,20 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+SERVER = 'Server'
+BARTENDER = 'Bartender'
+COOK = 'Cook'
+MANAGER = 'Manager'
+ENGLISH = 'English'
+SPANISH = 'Spanish'
+
 
 class Food(models.Model):
     name = models.CharField(max_length=20, default='add taco')
     tortilla = models.CharField(max_length=20)
     protein = models.CharField(max_length=20)
-    dress = models.CharField(max_length=20)
-    finish = models.CharField(max_length=20)
+    dress = models.CharField(max_length=60)
+    finish = models.CharField(max_length=60)
     description = models.CharField(max_length=250)
     price = models.DecimalField(max_digits=5, decimal_places=2)
 
@@ -19,7 +26,6 @@ class Food(models.Model):
 
 class Drink(models.Model):
     name = models.CharField(max_length=20, default='add drink')
-    portion = models.CharField(max_length=10)
     description = models.CharField(max_length=250)
     price = models.DecimalField(max_digits=5, decimal_places=2)
 
@@ -37,10 +43,20 @@ class Extra(models.Model):
 
 
 class EmployeeProfile(models.Model):
+    ROLE_CHOICES = (
+        (SERVER, 'Server'),
+        (BARTENDER, 'Bartender'),
+        (COOK, 'Cook'),
+        (MANAGER, 'Manager')
+        )
     worker = models.OneToOneField('auth.User')
     nickname = models.CharField(max_length=20, null=True, blank=True)
-    role = models.CharField(max_length=20)
-    preferred_language = models.CharField(max_length=20, default='English')
+    role = models.CharField(max_length=20, choices=ROLE_CHOICES, default=SERVER)
+    LANGUAGE_CHOICES = (
+        (ENGLISH, 'English'),
+        (SPANISH, 'Spanish'),
+        )
+    preferred_language = models.CharField(max_length=20, choices=LANGUAGE_CHOICES, default=ENGLISH)
 
     def __str__(self):
         return self.nickname

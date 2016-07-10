@@ -26,7 +26,7 @@
             <a class="btn btn-primary" href="{% url 'show_food_order_view' %}">Pending Food Orders</a>
             <a class="btn btn-primary" href="{% url 'show_drink_order_view' %}">Pending Drink Orders</a>
             <a class="btn btn-primary" href="{% url 'pending_customers_view' %}">Live Customers</a>
-            <p class="navbar-text navbar-right">Signed in as <a href="#" class="navbar-link">{{ request.user }}</a></p>
+            <p class="navbar-text navbar-right">Signed in as <a href="#" class="navbar-link">{{ request.user.employeeprofile.nickname }}</a></p>
 
           {% else %}
             <a class="btn btn-primary" href="{% url 'create_account_view' %}">Create Account</a>
