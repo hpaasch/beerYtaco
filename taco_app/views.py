@@ -5,12 +5,23 @@ from django.core.urlresolvers import reverse_lazy
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 
-from taco_app.models import Customer, OrderFood, OrderDrink, Food, EmployeeProfile
+from taco_app.models import Customer, OrderFood, OrderDrink, Food, EmployeeProfile, Drink
 from taco_app.forms import EmployeeProfileUpdateForm
 
 class IndexView(ListView):
     template_name = 'index.html'
     model = Food
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['drink_list'] = Drink.objects.all()
+        return context
+
+
+class CreateFoodView(CreateView):
+    model = Food
+    fields = ['name', 'tortilla', 'protein', 'dress', 'finish', 'description', 'price']
+    success_url = reverse_lazy('index_view')
 
 
 class OrderFoodView(CreateView):
@@ -19,22 +30,12 @@ class OrderFoodView(CreateView):
     fields = ['order_tag', 'food', 'food_quantity', 'extra', 'extra_quantity', 'notes']
     success_url = reverse_lazy('order_food_view')
 
-    # this would put a second form on the template. but only one can be submitted at a time. darn.
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     context['order_drink'] = OrderDrinkForm
-    #     return context
-
 
 class OrderDrinkView(CreateView):
     template_name = 'order_drink.html'
     model = OrderDrink
     fields = ['order_tag', 'drink', 'drink_quantity', 'notes']
     success_url = reverse_lazy('order_drink_view')
-
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     context['order_drink_form'] = OrderDrinkForm
 
 
 class ShowFoodOrder(ListView):
