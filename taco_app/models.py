@@ -57,6 +57,7 @@ class Customer(models.Model):
 
 class OrderFood(models.Model):
     order_tag = models.ForeignKey(Customer)
+    placed_by = models.ForeignKey(User, null=True)
     food = models.ForeignKey(Food, null=True, blank=True)
     food_quantity = models.PositiveIntegerField(null=True, default=0)
     extra = models.ForeignKey(Extra, null=True, blank=True)
@@ -74,6 +75,7 @@ class OrderFood(models.Model):
 
 class OrderDrink(models.Model):
     order_tag = models.ForeignKey(Customer)
+    placed_by = models.ForeignKey(User, null=True)
     drink = models.ForeignKey(Drink, null=True, blank=True)
     drink_quantity = models.PositiveIntegerField(null=True, blank=True)
     notes = models.CharField(max_length=250, null=True, blank=True)

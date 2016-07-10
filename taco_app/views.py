@@ -16,7 +16,7 @@ class IndexView(ListView):
 class OrderFoodView(CreateView):
     template_name = 'order_food.html'
     model = OrderFood
-    fields = ['order_tag', 'food', 'food_quantity', 'extra', 'extra_quantity', 'notes', 'order_up']
+    fields = ['order_tag', 'food', 'food_quantity', 'extra', 'extra_quantity', 'notes']
     success_url = reverse_lazy('order_food_view')
 
     # this would put a second form on the template. but only one can be submitted at a time. darn.
@@ -29,7 +29,7 @@ class OrderFoodView(CreateView):
 class OrderDrinkView(CreateView):
     template_name = 'order_drink.html'
     model = OrderDrink
-    fields = ['order_tag', 'drink', 'drink_quantity', 'notes', 'order_up']
+    fields = ['order_tag', 'drink', 'drink_quantity', 'notes']
     success_url = reverse_lazy('order_drink_view')
 
     # def get_context_data(self, **kwargs):
