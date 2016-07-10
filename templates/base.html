@@ -21,10 +21,10 @@
           {% if request.user.is_authenticated %}
             <a class="btn btn-primary" href="{% url 'logout' %}?next=/">Logout</a>
             <a class="btn btn-primary" href="{% url 'account_profile_view' %}">Employee Profile</a>
-            <a class="btn btn-primary" href="{% url 'order_food_view' %}">Order Food</a>
-            <a class="btn btn-primary" href="{% url 'order_drink_view' %}">Order Drink</a>
-            <a class="btn btn-primary" href="{% url 'show_food_order_view' %}">Pending Food Orders</a>
-            <a class="btn btn-primary" href="{% url 'show_drink_order_view' %}">Pending Drink Orders</a>
+            <a class="btn btn-primary" href="{% url 'order_food_view' %}">Place FOOD order</a>
+            <a class="btn btn-primary" href="{% url 'order_drink_view' %}">Place DRINK order</a>
+            <a class="btn btn-primary" href="{% url 'show_food_order_view' %}">View KITCHEN orders</a>
+            <a class="btn btn-primary" href="{% url 'show_drink_order_view' %}">View BAR orders</a>
             <a class="btn btn-primary" href="{% url 'pending_customers_view' %}">Live Customers</a>
             <p class="navbar-text navbar-right">Signed in as <a href="#" class="navbar-link">{{ request.user.employeeprofile.nickname }}</a></p>
 
