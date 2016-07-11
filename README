@@ -9,3 +9,5 @@ or limiting access to users who pass a test.
 2. Create radio buttons for ordering.
 3. Reduce the clicks needed to mark an Order Up.
 4. Reset a table to unpaid when new items are ordered.
+5. Make the navbar tighter.
+6. Add manager-only Update and Delete links to the Drinks and Extras.

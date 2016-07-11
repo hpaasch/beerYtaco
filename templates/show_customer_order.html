@@ -1,40 +1,60 @@
 {% extends "base.html" %}
 {% load tz %}
 {% block content %}
-<h3>This is the full unpaid order for Customer No. {{ food_list.order_tag.tag_number }}. </h3>
-<h5>(Bar only: Customer No. {{ drink.order_tag.tag_number }} )</h5>
-<h4>Drinks</h4>
-  {% for drink in drink_list %}
-  <p>  {{ drink.order_tag.tag_number }}
-    {{ drink.drink}}
-    {{ drink.drink.price}} each
-    {{ drink.drink_quantity }}
-    {% timezone 'America/New_York' %}
-{{ drink.created|time:"g:iA"|lower }}{% endtimezone %}</p>
-  {% endfor %}
-  <h5>Bar tab: ${{ subtotal_drinks }}</h5>
-  <h4>Food</h4>
-    {% for food in food_list %}
-    <p>  {{ food.order_tag.tag_number }}
-      {{ food.food}}
-      {{ food.food.price }} each
-      {{ food.food_quantity }}</p>
-      <p>{{ food.extra }}
-      {{ food.extra.price}} each
-      {{ food.extra_quantity }}
-      {% timezone 'America/New_York' %}
+<h3>Total amount due: ${{ total_unpaid }} </h3>
+  <form class="" action="" method="post">
+    {% csrf_token %}
+    <input class="btn btn-success" type="submit" name="paid" value="Mark as 'paid'">
+  </form>
+<h4>Bar subtotal: ${{ subtotal_drinks }}</h4>
+<table class="table table-hover">
+    <th>Table Number</th>
+    <th>Drink</th>
+    <th>Price each</th>
+    <th>Quantity</th>
+    <th>Time ordered</th>
+    <tbody>
+      {% for drink in drink_list %}
+        <tr>
+          <td>{{ drink.order_tag.tag_number }}</td>
+          <td>{{ drink.drink}}</td>
+          <td>{{ drink.drink.price}} </td>
+          <td>{{ drink.drink_quantity }}</td>
+          <td>{% timezone 'America/New_York' %}
+            {{ drink.created|time:"g:iA"|lower }}
+            {% endtimezone %}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+</table>
+<h4>Food subtotal: ${{ subtotal_food }}</h4>
+<table class="table table-hover">
+    <th>Table Number</th>
+    <th>Food item</th>
+    <th>Price each</th>
+    <th>Quantity</th>
+    <th>Extra item</th>
+    <th>Price each</th>
+    <th>Quantity</th>
+    <th>Time ordered</th>
+    <tbody>
+      {% for food in food_list %}
+        <tr>
+          <td>{{ food.order_tag.tag_number }}</td>
+          <td>{{ food.food}}</td>
+          <td>{{ food.food.price }}</td>
+          <td>{{ food.food_quantity }}</td>
+          <td>{{ food.extra }}</td>
+          <td>{{ food.extra.price}}</td>
+          <td>{{ food.extra_quantity }}</td>
+          <td>{% timezone 'America/New_York' %}
+            {{ food.created|time:"g:iA"|lower }}
+            {% endtimezone %}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+</table>
 
-        {{ food.created|time:"g:iA"|lower }}
-    {% endtimezone %}
-</p>
-    {% endfor %}
-    <h5>Food bill: ${{ subtotal_food }}</h5>
-    <h3>TOTAL: ${{ total_unpaid }}</h3>
-
-    <form class="" action="" method="post">
-      {% csrf_token %}
-      <input class="btn btn-success" type="submit" name="paid" value="Mark as 'paid'">
-    </form>
 
 
 {% endblock %}

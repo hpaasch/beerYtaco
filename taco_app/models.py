@@ -102,7 +102,7 @@ class OrderDrink(models.Model):
         return str(self.order_tag)
 
     class Meta:
-        ordering = ['-created', 'order_tag']
+        ordering = ['created']
 
 
 @receiver(post_save, sender='auth.User')
