@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView, ListView
-from django.views.generic.edit import CreateView, UpdateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.core.urlresolvers import reverse_lazy
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
@@ -19,9 +19,20 @@ class IndexView(ListView):
         return context
 
 
-class CreateFoodView(CreateView):
+class FoodCreateView(CreateView):
     model = Food
     fields = ['name', 'tortilla', 'protein', 'dress', 'finish', 'description', 'price']
+    success_url = reverse_lazy('index_view')
+
+
+class FoodUpdateView(UpdateView):
+    model = Food
+    fields = ['name', 'tortilla', 'protein', 'dress', 'finish', 'description', 'price']
+    success_url = reverse_lazy('index_view')
+
+
+class FoodDeleteView(DeleteView):
+    model = Food
     success_url = reverse_lazy('index_view')
 
 
@@ -31,7 +42,7 @@ class CreateExtraView(CreateView):
     success_url = reverse_lazy('index_view')
 
 
-class CreateDrinkView(CreateView):
+class DrinkCreateView(CreateView):
     model = Drink
     fields = ['name', 'description', 'price']
     success_url = reverse_lazy('index_view')

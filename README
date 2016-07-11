@@ -1,2 +1,11 @@
-"Create a taco" button is only for managers.
-Everyone can see the index on the homepage of tacos, extras and drinks.
+While everyone can see the index on the homepage of tacos, extras and drinks,
+several links are visible only to Managers. Manager-only links are the blue buttons
+to create a new taco, drink or extra, and the Update or Delete links for each taco.
+
+
+With more time, these items would be high on the short list:
+1. More securely limit access to Manager-only functions by setting up a permission
+or limiting access to users who pass a test.
+2. Create radio buttons for ordering.
+3. Reduce the clicks needed to mark an Order Up.
+4. Reset a table to unpaid when new items are ordered.
