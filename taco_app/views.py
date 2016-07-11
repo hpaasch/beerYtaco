@@ -5,7 +5,7 @@ from django.core.urlresolvers import reverse_lazy
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 
-from taco_app.models import Customer, OrderFood, OrderDrink, Food, EmployeeProfile, Drink
+from taco_app.models import Customer, OrderFood, OrderDrink, Food, EmployeeProfile, Drink, Extra
 from taco_app.forms import EmployeeProfileUpdateForm
 
 class IndexView(ListView):
@@ -15,12 +15,25 @@ class IndexView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['drink_list'] = Drink.objects.all()
+        context['extra_list'] = Extra.objects.all()
         return context
 
 
 class CreateFoodView(CreateView):
     model = Food
     fields = ['name', 'tortilla', 'protein', 'dress', 'finish', 'description', 'price']
+    success_url = reverse_lazy('index_view')
+
+
+class CreateExtraView(CreateView):
+    model = Extra
+    fields = ['name', 'description', 'price']
+    success_url = reverse_lazy('index_view')
+
+
+class CreateDrinkView(CreateView):
+    model = Drink
+    fields = ['name', 'description', 'price']
     success_url = reverse_lazy('index_view')
 
 

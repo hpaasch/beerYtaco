@@ -2,7 +2,7 @@
 from django.conf.urls import url, include
 from django.contrib import admin
 
-from taco_app.views import CreateAccountView, AccountProfileView, EmployeeProfileUpdateView, CreateFoodView
+from taco_app.views import CreateAccountView, AccountProfileView, EmployeeProfileUpdateView, CreateFoodView, CreateExtraView
 
 from taco_app.views import IndexView, OrderFoodView, OrderDrinkView, ShowFoodOrder, UpdateFoodOrder, ShowDrinkOrder, UpdateDrinkOrder, PendingCustomers, ShowCustomerOrder
 
@@ -15,6 +15,7 @@ urlpatterns = [
     url(r'accounts/profile/update/$', EmployeeProfileUpdateView.as_view(), name='employee_profile_update_view'),
     url(r'food/$', OrderFoodView.as_view(), name='order_food_view'),
     url(r'food/create/$', CreateFoodView.as_view(), name='create_food_view'),
+    url(r'food/create/extra$', CreateExtraView.as_view(), name='create_extra_view'),
     url(r'food/orders/$', ShowFoodOrder.as_view(), name='show_food_order_view'),
     url(r'food/orders/update/(?P<pk>\d+)/$', UpdateFoodOrder.as_view(), name='update_food_order_view'),
     url(r'drink/$', OrderDrinkView.as_view(), name='order_drink_view'),

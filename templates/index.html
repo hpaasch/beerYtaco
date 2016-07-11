@@ -4,7 +4,10 @@
   <h1>beer-Y-taco</h1>
   <h4>Where cold beer meets good tacos</h4>
   <div class="col-md-6">
-    <h3>Today's taco list:</h3>
+    <h3>Taco list:
+      {% if request.user.employeeprofile.role == 'manager' %}
+      <a class="btn btn-primary" href="{% url 'create_food_view' %}">Create a taco</a>
+      {% endif %}</h3>
     <div class="panel panel-default">
       {% for taco in object_list %}
         <div class="panel-heading">
@@ -19,10 +22,13 @@
           </div>
       {% endfor %}
     </div>
-    <a href="{% url 'create_food_view' %}">Add a taco</a>
+
   </div>
   <div class="col-md-6">
-    <h3>Today's beer list:</h3>
+    <h3>Drink list:
+      {% if request.user.employeeprofile.role == 'manager' %}
+      <a class="btn btn-primary" href="{% url 'create_extra_view' %}">Create a drink</a>
+      {% endif %}</h3>
     <div class="panel panel-default">
       {% for drink in drink_list %}
         <div class="panel-heading">
@@ -33,5 +39,23 @@
           </div>
       {% endfor %}
     </div>
+  </div>
+
+  <div class="col-md-6">
+    <h3>Extra list:
+      {% if request.user.employeeprofile.role == 'manager' %}
+      <a class="btn btn-primary" href="{% url 'create_extra_view' %}">Create an extra</a>
+      {% endif %}</h3>
+    <div class="panel panel-default">
+      {% for extra in extra_list %}
+        <div class="panel-heading">
+          <h3 class="panel-title">{{ extra }}, ${{ extra.price }}</h3>
+        </div>
+          <div class="panel-body">
+            <p>{{ extra.description }}</p>
+          </div>
+      {% endfor %}
+    </div>
+
   </div>
 {% endblock %}
